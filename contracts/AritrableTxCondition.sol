@@ -7,11 +7,11 @@ import "./Arbitrator.sol";
 import "./IArbitrable.sol";
 
 
-contract ArbitrableCondition is IArbitrable{
+contract ArbitrableTxCondition is IArbitrable{
     address constant public TOKEN_ADDR = 0x1111111111111111111111111111111111111111;
     address constant public SENDER = 0x2222222222222222222222222222222222222222;
     address constant public RECEIVER = 0x3333333333333333333333333333333333333333;
-    address constant public CHALLENGE_NST_ADDR = 0x4444444444444444444444444444444444444444;
+    address constant public CHALLENGE_NST = 0x4444444444444444444444444444444444444444;
     uint constant public CHALLENGE_NST_ID = 123456789;
 
     string constant public RULING_OPTIONS = "Reimburse partyA;Pay partyB";
@@ -21,7 +21,6 @@ contract ArbitrableCondition is IArbitrable{
     string constant public META_EVIDENCE = "/ipfs/QmbwHnW...";
 
     uint constant CHALLENGE_PERIOD_END = 99999;
-    uint constant FEE_COLLECTION_PERIOD_END = 88888;
 
     address constant public PLASMA_BRIDGE = 0x6666666666666666666666666666666666666666;
 
@@ -41,7 +40,7 @@ contract ArbitrableCondition is IArbitrable{
      *  @param _v The verification parameter of the sender signature.
      */
     function fulfill (bytes32 _r, bytes32 _s, uint8 _v) external {
-        IERC1948 nst = IERC1948(CHALLENGE_NST_ADDR);
+        IERC1948 nst = IERC1948(CHALLENGE_NST);
         IERC20 token = IERC20(TOKEN_ADDR);
         uint challenged = uint(nst.readData(CHALLENGE_NST_ID));
 
@@ -55,7 +54,7 @@ contract ArbitrableCondition is IArbitrable{
     }
 
 ///////////////////
-// Root chain.
+// Root Chain
 ///////////////////
 
     /** @dev Exit spending condition to root chain.
