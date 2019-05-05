@@ -6,7 +6,11 @@ import "./PlasmaBridge.sol";
 import "./Arbitrator.sol";
 import "./IArbitrable.sol";
 
-
+/** @title ArbitratorTxCondition
+ *  Allows arbitrable transactions to take place on plasma leap.
+ *  The sender is given a challenge period during which he can lock the funds on the spending condition.
+ *  Once the tokens are locked, they can be exited to the root chain to go through a dispute resolution system.
+ */
 contract ArbitrableTxCondition is IArbitrable{
     address constant public TOKEN_ADDR = 0x1111111111111111111111111111111111111111;
     address constant public SENDER = 0x2222222222222222222222222222222222222222;
