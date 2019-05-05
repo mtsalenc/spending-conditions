@@ -48,12 +48,12 @@ contract ArbitrableTxCondition is IArbitrable{
         IERC20 token = IERC20(TOKEN_ADDR);
         uint challenged = uint(nst.readData(CHALLENGE_NST_ID));
 
-        if (now > CHALLENGE_PERIOD_END && challenged == 0) {
-            token.transfer(RECEIVER, token.balanceOf(address(this)));
-        } else {
+        if (now <= CHALLENGE_PERIOD_END ) {
             address signer = ecrecover(bytes32(bytes20(address(this))), _v, _r, _s);
             require(signer == SENDER, "Only the sender can challenge the transfer.");
             nst.writeData(CHALLENGE_NST_ID, bytes32(uint(1)));
+        } else if (challenged == 0) {
+            token.transfer(RECEIVER, token.balanceOf(address(this)));
         }
     }
 
